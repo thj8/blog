@@ -4,7 +4,7 @@ python:
   - "3.6"
 
 install:
-  - pip install mkdocs
+  - pip install -r ./requirements.txt
   - echo -e "machine github.com\n  login ${GITHUB_TOKEN}" > ~/.netrc
 
 script:
