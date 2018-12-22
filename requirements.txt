@@ -1,2 +1,2 @@
-mkdocs
-mkdocs-rtd-dropdown
+mkdocs==1.0.4
+mkdocs-rtd-dropdown==1.0.2
