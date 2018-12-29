@@ -1,49 +1,69 @@
-## 数一数tree的个数
 
-```shell
-find .git/objects -type f |awk -F'/' '{print $3$4}'|xargs -I {} git cat-file -t {}
-commit
-tree
-tree
-tree
-commit
-blob
-blob
-
-find .git/objects -type f |awk -F'/' '{print $3$4}'|xargs -I {} git cat-file -p {}
-tree 4e311ec3283274299bd0a030a58c5f38f087786f
-parent 311a7a387e33ccd1673015f9efe858e6e0f76511
-author tanghaijun <tanghj@cyberpeace.cn> 1545664859 +0800
-committer tanghaijun <tanghj@cyberpeace.cn> 1545664859 +0800
-
-add thj
-040000 tree 6e17e26237e12bc64cad4af1d9ddd8e8969d8111	doc
-100644 blob ce013625030ba8dba906f756967f9e9ca394464a	thj
-100644 blob 1b98d086dfdf06f690f5bc601d46c3704ef0b4e9	thj2
-100644 blob ce013625030ba8dba906f756967f9e9ca394464a	readme
-040000 tree 6e17e26237e12bc64cad4af1d9ddd8e8969d8111	doc
-tree 315f8050b11704358140f3f25f4ae682d631f7df
-author tanghaijun <tanghj@cyberpeace.cn> 1545663852 +0800
-committer tanghaijun <tanghj@cyberpeace.cn> 1545663852 +0800
-
-add readme
-hello
-rrrrrr
-
-find .git/objects -type f
-.git/objects/3b/4fccb3f351c9f0f1fc05bdaa9d4df545e8a7ce
-.git/objects/4e/311ec3283274299bd0a030a58c5f38f087786f
-.git/objects/6e/17e26237e12bc64cad4af1d9ddd8e8969d8111
-.git/objects/31/5f8050b11704358140f3f25f4ae682d631f7df
-.git/objects/31/1a7a387e33ccd1673015f9efe858e6e0f76511
-.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a
-.git/objects/1b/98d086dfdf06f690f5bc601d46c3704ef0b4e9
-```
-
-## 分离头指针
-
-## 修改最后一次commit信息
+## 配置
+### core.pager
+core.pager指定 Git 运行诸如log、diff等所使用的分页器，你能设置成用**more**或者任何你喜欢的分页器（默认用的是less）， 当然你也可以什么都不用，设置空字符串：
 
 ```
-git commit --amend
+$ git config --global core.pager ''
 ```
+
+## 暂存区
+
+### 暂存区和HEAD比较
+```
+git diff --cached
+```
+
+### 工作区和暂存区区
+```
+git diff                    # 所有文件的差别
+git diff -- readme.md       # 只看一个文件的差别
+git diff -- a.md b.md       # 只看若干文件的差别
+```
+
+### 恢复暂存区和HEAD一样
+```
+git reset HEAD
+```
+
+### 恢复工作区和暂存区一样
+```
+git checkout -- <file>...
+```
+
+## commit
+
+### 修改最后一次commit信息
+
+```
+git commit --amend  #amend本身就是修正的意思
+```
+
+### 修改老旧commit的message
+
+```
+git log -3
+git rebase -i 27abcd123
+```
+此处选择reword，使用这个commit, 但是编辑commit的信息，改pick为reword，保存退出，新的窗口改写message即可
+
+(pick 使用这个commit)
+```
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+```
+
+### 合并连续多次commit
+```
+git rebase -i 27abcd123
+```
+基于多次commit第一次的parent的提交hash，保留第一个pick，现在要合并的全部改为squash
+
+(此处选择squash, 使用这个commit， 但是合并到之前到commit中)
+```
+# s, squash <commit> = use commit, but meld into previous commit
+```
+
+### 合并非连续多次commit
+选择多次commit的第一次的parent的提交hash，移动后面非连续的commit到第一行下面，并全部改为squash
+
