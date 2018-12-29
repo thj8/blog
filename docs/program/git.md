@@ -1,5 +1,6 @@
 ## 数一数tree的个数
-```
+
+```shell
 find .git/objects -type f |awk -F'/' '{print $3$4}'|xargs -I {} git cat-file -t {}
 commit
 tree

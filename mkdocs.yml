@@ -1,3 +1,6 @@
 site_name: My Docs
-theme:
-  name: 'rtd-dropdown'
+markdown_extensions : 
+    - tables
+    - codehilite
+    - smarty
+    - toc
