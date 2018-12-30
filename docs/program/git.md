@@ -23,7 +23,7 @@ git diff -- a.md b.md       # 只看若干文件的差别
 
 ### 恢复暂存区和HEAD一样
 ```
-git reset HEAD
+git reset HEAD -- <file>...
 ```
 
 ### 恢复工作区和暂存区一样
@@ -34,13 +34,11 @@ git checkout -- <file>...
 ## commit
 
 ### 修改最后一次commit信息
-
 ```
 git commit --amend  #amend本身就是修正的意思
 ```
 
 ### 修改老旧commit的message
-
 ```
 git log -3
 git rebase -i 27abcd123
@@ -67,3 +65,35 @@ git rebase -i 27abcd123
 ### 合并非连续多次commit
 选择多次commit的第一次的parent的提交hash，移动后面非连续的commit到第一行下面，并全部改为squash
 
+### 消除最近几次的commit
+```
+git reset --hard <hash>
+```
+工作区和暂存区都恢复了，所以此条命令**慎用**
+
+### 不同commit制定文件的差异
+```
+git diff temp master -- readme.md
+git diff commti1 commit2 -- readme.md
+```
+
+## 文件操作
+### 正确删除文件
+```
+git rm name1
+```
+
+### 重命名
+```
+git mv name1 name2
+```
+
+## 其他
+### 紧急任务来了
+```
+git stash
+git stash list
+
+git stash pop               # 弹出stash
+git stash apply             # 恢复到工作区，但是不弹出stash
+```
