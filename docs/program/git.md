@@ -88,6 +88,56 @@ git rm name1
 git mv name1 name2
 ```
 
+## 远程仓库
+
+### 添加远程仓库
+```
+git remote add origin git@github.com:thj8/blog.git
+```
+
+### 抓取和推送
+```
+git fetch origin
+git push -u origin master
+```
+
+
+## 协作
+
+### 不同人修改不同文件
+git pull = git fetch + git merge
+```
+git pull
+git commit -am "some"
+git push
+```
+
+### 不同人修改相同文件不同区域
+同上，没有什么要特别注意的事项
+
+### 不同人修改相同文件相同区域
+会出现冲突，解决冲突，并add，commit，push
+```
+git pull
+vim readme.md
+git commit -am"resolve conflict"
+git push
+```
+```
+git merge --abort  #取消merge
+```
+
+### 同时改变了文件名和内容 
+git会智能的感知文件名的变化，不需要特殊的处理
+
+### 把同一文件修改为不同的文件名
+```
+git rm index.htm
+git add index1.htm
+git rm index2.htm
+git commit -m "resolve file name conflict"
+```
+
 ## 其他
 ### 紧急任务来了
 ```
@@ -96,4 +146,15 @@ git stash list
 
 git stash pop               # 弹出stash
 git stash apply             # 恢复到工作区，但是不弹出stash
+```
+
+### 慎重使用的命令
+```
+git rest --hard
+git checkout
+```
+
+### 禁止使用的命令
+```
+git push -f
 ```
