@@ -1,4 +1,6 @@
-site_name: My Docs
+site_name: TinyFat
+theme:
+    name: 'material'
 markdown_extensions : 
     - tables
     - codehilite
