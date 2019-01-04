@@ -29,7 +29,7 @@ EOF
 cat <<EOF >> /etc/shadowsocks.json
 {
   "server_port": 22,
-  "password": "thjuzon57jd0v869t7w",
+  "password": "uzon57jd0v869t7w",
   "method": "aes-256-cfb"
 }
 EOF
