@@ -1,13 +1,3 @@
-
-ip link show
-ip addr show brctl showmacs docker0
-docker run -d gremlin9/flask-test
-ip link show
-brctl showmacs docker0
-docker ps
-docker exec -it xxxxx ip addr show
-
-
 ## The pid namespace
 - In Linux,each and every process running on the system must have a unique number identifying it called the process ID or the PID.Process ID's start from 1(often assigned to the init process) and increment as more and more processes are  spawned by the system.
 
