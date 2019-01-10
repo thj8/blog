@@ -138,6 +138,46 @@ git rm index2.htm
 git commit -m "resolve file name conflict"
 ```
 
+## 分支
+
+### 查看全部分支
+包括本地和远程的所有分支
+```
+git branch -a
+```
+
+### 删除本地分支
+```
+git branch -d thj_test
+git branch -D thj_test     # 强制删除分支
+```
+
+### 删除远程分支
+```
+git push origin -d thj_test
+```
+
+## tag
+### 新建一个tag
+```
+git tag -a v0.1 -m 'first version v0.1'
+```
+
+### 推tag指远程
+```
+git push origin --tags
+```
+
+### 删除本地tag
+```
+git tag -d v0.1
+```
+
+### 删除远程tag
+```
+git push origin -d tag v0.1
+```
+
 ## 其他
 ### 紧急任务来了
 ```
