@@ -13,12 +13,12 @@ docker exec commadn as follows:
 ```
 ➜  ~ sudo docker exec server1 ps -ef                                
 PID   USER     TIME  COMMAND
-    1 root      0:00 nc -l -l 0.0.0.0:7070
+    1 root      0:00 nc -l 0.0.0.0:7070
     8 root      0:00 ps -ef
 
 ➜  ~ sudo docker exec server2 ps -ef
 PID   USER     TIME  COMMAND
-    1 root      0:00 nc -l -l 0.0.0.0:8080
+    1 root      0:00 nc -l 0.0.0.0:8080
     8 root      0:00 ps -ef
 ```
 
