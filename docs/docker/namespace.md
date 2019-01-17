@@ -4,8 +4,8 @@
 - In the following example, we are creating two different containers based on the Busybox image:
 
 ```
-sudo docker run -d --name server1 busybox nc -l -l 0.0.0.0:7070
-sudo docker run -d --name server2 busybox nc -l -l 0.0.0.0:8080
+sudo docker run -d --name server1 busybox nc -l 0.0.0.0:7070
+sudo docker run -d --name server2 busybox nc -l 0.0.0.0:8080
 ```
 - Now let's see what processes does each container possess by running the ps command on each of them.You can run additional commands against the container in addition to the main command that it runs by using Docker'e exec command:
 docker exec commadn as follows:
@@ -13,12 +13,12 @@ docker exec commadn as follows:
 ```
 ➜  ~ sudo docker exec server1 ps -ef                                
 PID   USER     TIME  COMMAND
-    1 root      0:00 nc -l -l 0.0.0.0:7070
+    1 root      0:00 nc -l 0.0.0.0:7070
     8 root      0:00 ps -ef
 
 ➜  ~ sudo docker exec server2 ps -ef
 PID   USER     TIME  COMMAND
-    1 root      0:00 nc -l -l 0.0.0.0:8080
+    1 root      0:00 nc -l 0.0.0.0:8080
     8 root      0:00 ps -ef
 ```
 
