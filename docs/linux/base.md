@@ -1,11 +1,11 @@
 ## 安装常用软件
 
 ```
-sudo yum -y install zsh vim curl wget net-tools lsof nmap-ncat.x86_64
+sudo yum -y install vim curl wget net-tools lsof nmap-ncat.x86_64
 sudo yum -y install git
 ```
 
-## zsh
+## oh my zsh
 
 ```shell
 sudo yum install zsh
