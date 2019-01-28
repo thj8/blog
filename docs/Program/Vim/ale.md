@@ -35,10 +35,7 @@ pip install flake8
 ```
 
 > Flake8是对下面三个工具的封装：
-
 > 1）PyFlakes：静态检查Python代码逻辑错误的工具。
-
 > 2）Pep8： 静态检查PEP8编码风格的工具。
-
 > 3）NedBatchelder’s McCabe script：静态分析Python代码复杂度的工具。
 
