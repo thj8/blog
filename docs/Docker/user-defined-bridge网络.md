@@ -1,0 +1,149 @@
+## 创建
+
+### 新建bridge网络
+```
+[thj@thj ~]$ docker network create --driver bridge my_net
+908d52d75d53cba0b8f29412a42a57ad474d5ebbe80c8c942076975f959f17a2
+```
+
+### 查看网络结构变化
+```
+[thj@thj ~]$ brctl show
+bridge name             bridge id               STP enabled     interfaces
+br-65be0a29e10d         8000.024225d4d830       no
+br-908d52d75d53         8000.0242e6fc66c0       no
+docker0                 8000.0242254f7156       no              veth4160daa
+```
+
+### 查看my_net的配置信息
+```
+[thj@thj ~]$ docker network inspect my_net
+[
+    {
+        "Name": "my_net",
+        "Id": "908d52d75d53cba0b8f29412a42a57ad474d5ebbe80c8c942076975f959f17a2",
+        "Created": "2019-02-18T07:31:00.080280416Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.19.0.0/16",
+                    "Gateway": "172.19.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+```
+
+### 制定subnet和网管新建网络
+```
+[thj@thj ~]$ docker network create --subnet 172.22.16.0/24 --gateway 172.22.16.1 my_net2
+b5b84f98ac478364eaf815fe4d8c7d10d43d99d55064a863a97c611eaea8a93e
+```
+
+### 查看网桥信息
+```
+[thj@thj ~]$ ifconfig br-b5b84f98ac47
+br-b5b84f98ac47: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.22.16.1  netmask 255.255.255.0  broadcast 0.0.0.0
+        ether 02:42:57:e2:1b:1d  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+
+### 制定网络启动容器
+使用`--network=xxxx`来指定网络
+
+```
+[thj@thj ~]$ docker run -it --network=my_net2 busybox
+/ # ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+94: eth0@if95: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+    link/ether 02:42:ac:16:10:02 brd ff:ff:ff:ff:ff:ff
+    inet 172.22.16.2/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:acff:fe16:1002/64 scope link
+       valid_lft forever preferred_lft forever
+/
+```
+
+### 指定网络，指定ip启动容器
+使用`--ip=172.16.x.x`来指定ip
+```
+[thj@thj ~]$ docker run -it --network=my_net2 --ip=172.22.16.8 busybox
+/ # ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+96: eth0@if97: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+    link/ether 02:42:ac:16:10:08 brd ff:ff:ff:ff:ff:ff
+    inet 172.22.16.8/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:acff:fe16:1008/64 scope link
+       valid_lft forever preferred_lft forever
+/
+```
+
+### 为容器添加网卡
+```
+[thj@thj ~]$ docker exec -it 83c4 /bin/sh
+# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+90: eth0@if91: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.2/16 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:acff:fe11:2/64 scope link
+       valid_lft forever preferred_lft forever
+# ^C
+# exit
+[thj@thj ~]$ docker network connect my_net 83c4
+[thj@thj ~]$ docker exec -it 83c4 /bin/sh                                                                                                                                                               
+# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+90: eth0@if91: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.2/16 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:acff:fe11:2/64 scope link
+       valid_lft forever preferred_lft forever
+98: eth1@if99: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:13:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.19.0.2/16 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:acff:fe13:2/64 scope link
+       valid_lft forever preferred_lft forever
+#
+```
+```
