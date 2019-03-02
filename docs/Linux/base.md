@@ -24,3 +24,13 @@ mkvirtualenv thj                  # 默认python2.7的虚拟环境
 
 ```
 
+## yum阿里源
+
+```
+if [[ `cat /etc/yum.repos.d/CentOS-Base.repo|grep aliyun | wc -l` -eq 0 ]]; then
+    cd /etc/yum.repos.d/
+    mv CentOS-Base.repo CentOS-Base.repo_bak
+    wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+    cd /tmp
+fi
+```
