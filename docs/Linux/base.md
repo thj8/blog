@@ -8,7 +8,7 @@ sudo yum -y install git
 ## oh my zsh
 
 ```shell
-sudo yum install zsh
+sudo yum -y install zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
