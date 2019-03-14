@@ -73,7 +73,7 @@ import  (
 func main() {
   cmd := exec.Command("sh")
   cmd.SysProcAttr = &syscall.SysProcAttr{
-    Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC)
+    Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC,
   }
 
   cmd.Stdin = os.Stdin
@@ -120,4 +120,43 @@ key        msqid      owner      perms      used-bytes   messages
 
 > 通过以上实验，可以发现，在新创建的Namespace里，看不到宿主机上已经创建的message queue，说明IIPC Namespace创建成功，IPC已经被隔离。
 
+## PID Namespace
+PID Namespace是用来隔离进程ID的。同样一个进程在不同的PID Namespace里可以拥有不同的PID。这样就可以理解。
 
+> 在docker container里面，使用ps -ef经常会发现，在容器内，前台运行的那个进程PID是1,但是在容器外，使用ps -ef会发现同样的进程却有不同的PID。
+
+```
+package main
+
+import  (
+
+  "os/exec"
+  "syscall"
+  "os"
+  "log"
+)
+
+func main() {
+  cmd := exec.Command("sh")
+  cmd.SysProcAttr = &syscall.SysProcAttr{
+    Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | 
+      syscall.CLONE_NEWPID,
+  }
+
+  cmd.Stdin = os.Stdin
+  cmd.Stdout = os.Stdout
+  cmd.Stderr = os.Stderr
+
+  if err := cmd.Run(); err != nil {
+    log.Fatal(err)
+  }
+}
+```
+
+```
+➜  src git:(master) ✗ sudo go run main.go
+# echo $$
+1
+#
+```
+> 可以看到，该操作打印了当前Namespace的PID，其值为1。也就是说，pid被映射到Namespace里后PID为1，。**这里还不能用ps来查看，因为ps和top等命令会使用/proc内容。**
