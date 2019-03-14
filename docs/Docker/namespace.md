@@ -4,43 +4,52 @@
 
 > 举个例子，我们都知道，Linux下的超级父亲进程的PID是1，所以，同chroot一样，如果我们可以把用户的进程空间jail到某个进程分支下，并像chroot那样让其下面的进程 看到的那个超级父进程的PID为1，于是就可以达到资源隔离的效果了（不同的PID namespace中的进程无法看到彼此）
 
-
-## clone系统调用
+## UTS Namespace
+UTS Namespace主要是用来隔离nodename和domainname两个系统标识。在UTS Namespace利民啊，每个Namespace允许有自己的hostname。
 
 ```
-#define _GUN_SOURCE
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <stdio.h>
-#include <sched.h>
-#include <signal.h>
-#include <unistd.h>
+package main
 
-#define STACK_SIZE (1024*1024)
-static char container_stack[STACK_SIZE];		
+import  (
 
-char* const container_args[] = {
-  "bin/bash",
-  NULL
-};
+  "os/exec"
+  "syscall"
+  "os"
+  "log"
+)
 
-int container_main(void* arg)
-{
-  printf("Container - inside the container!\n");
-  execv(container_args[0], container_args);
-  printf("Something's wrong!");
-}
+func main() {
+  cmd := exec.Command("sh")
+  cmd.SysProcAttr = &syscall.SysProcAttr{
+    Cloneflags: syscall.CLONE_NEWUTS,
+  }
 
-int main()
-{
-  printf("Parent - start a container!\n");
-  int container_pid = clone(container_main, STACK_SIZE+container_stack, SIGCHLD, NULL);
-  waitpid(container_pid, NULL, 0);
-  printf("Parent - container stopped!\n");
-  return 0;
+  cmd.Stdin = os.Stdin
+  cmd.Stdout = os.Stdout
+  cmd.Stderr = os.Stderr
+
+  if err := cmd.Run(); err != nil {
+    log.Fatal(err)
+  }
 }
 ```
-从上面的程序，我们可以看到，这和pthread基本上是一样的玩法。但是，对于上面的程序，父子进程的进程空间是没有什么差别的，父进程能访问到的子进程也能。
 
+由于UTS Namespace对hostname做了隔离，所以在这个环境内修改hostname应该不影响外部主机。
 
+```
+➜  src git:(master) ✗ sudo go run uts.go
+# hostname
+sugar
+# hostname -b thj
+# hostname
+thj
+#
+```
 
+另外启动一个shell，在宿主机上运行hostname，看一下效果。
+
+```
+➜  Docker git:(master) ✗ hostname
+sugar
+
+```
