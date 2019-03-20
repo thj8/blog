@@ -44,6 +44,7 @@ sugar
 # hostname
 thj
 #
+
 ```
 
 - 另外启动一个shell，在宿主机上运行hostname，看一下效果。
@@ -121,6 +122,7 @@ key        msqid      owner      perms      used-bytes   messages
 > 通过以上实验，可以发现，在新创建的Namespace里，看不到宿主机上已经创建的message queue，说明IIPC Namespace创建成功，IPC已经被隔离。
 
 ## PID Namespace
+
 PID Namespace是用来隔离进程ID的。同样一个进程在不同的PID Namespace里可以拥有不同的PID。这样就可以理解。
 
 > 在docker container里面，使用ps -ef经常会发现，在容器内，前台运行的那个进程PID是1,但是在容器外，使用ps -ef会发现同样的进程却有不同的PID。
@@ -160,3 +162,23 @@ func main() {
 #
 ```
 > 可以看到，该操作打印了当前Namespace的PID，其值为1。也就是说，pid被映射到Namespace里后PID为1。**这里还不能用ps来查看，因为ps和top等命令会使用/proc内容。**
+
+## Mount Namespace
+
+用来隔离各个进程看到的挂载点试图。在不同Namespace的进程中，看到的文件系统层次是不一样的。在Mount Namespace中调用mount和umount仅仅只会影响当前Namespace内的文件系统。
+
+```
+root@sugar:/home/sugar/src/blog/docs/Docker/src# go run main.go 
+# ls /proc |wc
+    287     287    1445
+# mount -t proc proc /proc									// 将/proc mount到我们自己的Namespace下面来
+# ls /proc |wc
+     63      63     486
+# ps -ef
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 00:47 pts/19   00:00:00 sh
+root         7     1  0 00:47 pts/19   00:00:00 ps -ef
+```
+
+可以看到，在当前的Namespace中，sh进程是PID为1的进程，这就说明，当前的Mount Namespace中的mount和外部空间是隔离的，mount操作并没有影响到外部。
+
