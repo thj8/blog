@@ -159,4 +159,4 @@ func main() {
 1
 #
 ```
-> 可以看到，该操作打印了当前Namespace的PID，其值为1。也就是说，pid被映射到Namespace里后PID为1，。**这里还不能用ps来查看，因为ps和top等命令会使用/proc内容。**
+> 可以看到，该操作打印了当前Namespace的PID，其值为1。也就是说，pid被映射到Namespace里后PID为1。**这里还不能用ps来查看，因为ps和top等命令会使用/proc内容。**
