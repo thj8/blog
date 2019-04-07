@@ -16,4 +16,4 @@ before_install:
 - echo -e "Host 39.98.211.71\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 after_success:
 - ssh root@144.34.201.7 -p 27213 'cd /home/blog && ./update.sh'
-- ssh root@39.98.211.71 -p 27213 'cd /home/blog && ./update.sh'
+- ssh root@39.98.211.71 'cd /home/blog && ./update.sh'
