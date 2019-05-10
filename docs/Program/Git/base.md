@@ -188,14 +188,14 @@ git branch -a
 ### 删除本地分支
 
 ```
-git branch -d thj\_test
-git branch -D thj\_test     # 强制删除分支
+git branch -d thj_test
+git branch -D thj_test     # 强制删除分支
 ```
 
 ### 删除远程分支
 
 ```
-git push origin -d thj\_test
+git push origin -d thj_test
 ```
 
 ### 查看远程和本地分支对应关系
@@ -213,7 +213,7 @@ git remote prune origin
 ### 只删除远程的分支
 
 ```
-git push origin -d branch\_name
+git push origin -d branch_name
 ```
 
 ## tag
