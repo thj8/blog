@@ -35,3 +35,44 @@ if [[ `cat /etc/yum.repos.d/CentOS-Base.repo|grep aliyun | wc -l` -eq 0 ]]; then
     cd /tmp
 fi
 ```
+
+## tmux
+
+```
+yum -y install libevent-devel
+yum -y install ncurses-devel
+yum -y install automake
+
+cd /tmp
+git clone https://github.com/tmux/tmux.git
+cd tmux
+sh autogen.sh
+./configure
+make
+make install
+
+
+cd
+git clone https://github.com/gpakosz/.tmux.git
+ln -s -f .tmux/.tmux.conf
+cp .tmux/.tmux.conf.local .
+
+cat <<EOF >> ~/.tmux.conf.local
+set-option -g prefix C-a
+unbind-key C-a
+bind-key C-a send-prefix
+setw -g mode-keys vi
+EOF
+```
+
+## iptables
+
+```
+service iptables status
+yum install -y iptables
+yum update iptables 
+yum install -y iptables-services
+
+systemctl stop firewalld
+systemctl mask firewalld
+```
