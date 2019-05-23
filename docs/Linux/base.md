@@ -3,6 +3,7 @@
 ```
 sudo yum -y install vim curl wget net-tools lsof nmap-ncat.x86_64
 sudo yum -y install git
+sudo yum -y install gcc
 ```
 
 ## oh my zsh
