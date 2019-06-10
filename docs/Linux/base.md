@@ -43,8 +43,10 @@ fi
 yum -y install libevent-devel ncurses-devel
 yum -y install automake
 yum -y install byacc flex
+
 cd /tmp
 git clone https://github.com/tmux/tmux.git
+
 cd tmux
 sh autogen.sh
 ./configure
