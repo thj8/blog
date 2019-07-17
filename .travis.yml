@@ -9,9 +9,8 @@ branches:
   only:
   - master
 before_install:
-- openssl aes-256-cbc -K $encrypted_2fee6f295dfd_key -iv $encrypted_2fee6f295dfd_iv
-  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- openssl aes-256-cbc -K $encrypted_2fee6f295dfd_key -iv $encrypted_2fee6f295dfd_iv -in id_rsa.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
-- echo -e "Host 144.34.201.7\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- echo -e "Host 176.122.161.236\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 after_success:
-- ssh root@144.34.201.7 -p 27213 'cd /home/blog && ./update.sh'
+- ssh root@176.122.161.236 -p 27213 'cd /home/blog && ./update.sh'

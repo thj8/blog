@@ -38,7 +38,7 @@ EOF
 cat <<EOF >> /usr/lib/systemd/system/supervisord.service
 [Unit]
 Description=supervisor
-After=syslog.target network.target
+After=network.target
 
 [Service]
 ExecStart = /usr/bin/supervisord
