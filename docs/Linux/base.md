@@ -77,3 +77,48 @@ yum install -y iptables-services
 systemctl stop firewalld
 systemctl mask firewalld
 ```
+
+## yum
+使用--showduplicates参数列出所有版本
+```
+➜  cr git:(develop) ✗ ssh root@172.29.100.191
+Last login: Tue Aug 13 17:46:01 2019 from 192.168.100.102
+[root@tinyFat ~]# yum list docker-ce --showduplicates
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: mirrors.aliyun.com
+ * epel: mirrors.yun-idc.com
+ * extras: mirrors.aliyun.com
+ * updates: mirrors.aliyun.com
+Installed Packages
+docker-ce.x86_64                           3:18.09.6-3.el7                                    @docker-ce-stable
+Available Packages
+docker-ce.x86_64                           17.03.0.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.03.1.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.03.2.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.03.3.ce-1.el7                                   docker-ce-stable
+docker-ce.x86_64                           17.06.0.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.06.1.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.06.2.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.09.0.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.09.1.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.12.0.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           17.12.1.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           18.03.0.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           18.03.1.ce-1.el7.centos                            docker-ce-stable
+docker-ce.x86_64                           18.06.0.ce-3.el7                                   docker-ce-stable
+docker-ce.x86_64                           18.06.1.ce-3.el7                                   docker-ce-stable
+docker-ce.x86_64                           18.06.2.ce-3.el7                                   docker-ce-stable
+docker-ce.x86_64                           18.06.3.ce-3.el7                                   docker-ce-stable
+docker-ce.x86_64                           3:18.09.0-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:18.09.1-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:18.09.2-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:18.09.3-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:18.09.4-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:18.09.5-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:18.09.6-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:18.09.7-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:18.09.8-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:19.03.0-3.el7                                    docker-ce-stable
+docker-ce.x86_64                           3:19.03.1-3.el7                                    docker-ce-stable
+```
