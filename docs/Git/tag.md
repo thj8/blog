@@ -6,7 +6,7 @@ git tag -a v0.1 -m 'first version v0.1'     # -a tag名称 -m message
 git tag -a v2.2 9fceb02                     # 在9fceb02处打上tag
 ```
 
-### 推tag指远程
+### 推tag至远程
 
 ```
 git push origin v1.5                        # 推送一个tag
@@ -23,6 +23,8 @@ git tag -d v0.1
 
 ```
 git push origin -d tag v0.1
+
+git push origin :refs/tags/v20190514
 ```
 
 ### 查看tag信息
@@ -44,12 +46,28 @@ Date:   Wed Aug 14 11:54:16 2019 +0800
 
 ```
 
-### check分支
-```
-git checkout 2.0.0
-```
-
 ```
 $ git checkout -b version2 v2.0.0
 Switched to a new branch 'version2'
+```
+
+### show
+
+```
+➜  test git:(master) git show-ref --tags --dereference
+b19e9c4d887666a3c34646f6220f2d91b757a238 refs/tags/v2.0
+dabb40d2e30dc939bf5d77dc29d5ee76fbc653bc refs/tags/v2.0^{}
+dabb40d2e30dc939bf5d77dc29d5ee76fbc653bc refs/tags/v2.1
+➜  test git:(master) git show-ref --tags
+b19e9c4d887666a3c34646f6220f2d91b757a238 refs/tags/v2.0
+dabb40d2e30dc939bf5d77dc29d5ee76fbc653bc refs/tags/v2.1
+```
+
+### ls-remote 
+
+```
+➜  test git:(master) git ls-remote --tags origin
+b19e9c4d887666a3c34646f6220f2d91b757a238        refs/tags/v2.0
+dabb40d2e30dc939bf5d77dc29d5ee76fbc653bc        refs/tags/v2.0^{}
+dabb40d2e30dc939bf5d77dc29d5ee76fbc653bc        refs/tags/v2.1
 ```
