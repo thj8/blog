@@ -45,8 +45,3 @@ git remote show origin
 git remote prune origin
 ```
 
-### 只删除远程的分支
-
-```
-git push origin -d branch_name
-```
