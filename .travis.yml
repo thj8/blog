@@ -11,6 +11,6 @@ branches:
 before_install:
 - openssl aes-256-cbc -K $encrypted_40b5254b0ebf_key -iv $encrypted_40b5254b0ebf_iv -in id_rsa.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
-- echo -e "Host 176.122.161.236\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- echo -e "Host 45.62.114.69\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 after_success:
-- ssh root@176.122.161.236 -p 27213 'cd /home/blog && ./update.sh'
+- ssh root@45.62.114.69 -p 27213 'cd /home/blog && ./update.sh'
