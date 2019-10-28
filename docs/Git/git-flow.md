@@ -1,4 +1,3 @@
-## git flow
 ### 初始分支
 所有在Master分支上的Commit应该Tag
 
