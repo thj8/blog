@@ -48,4 +48,17 @@ You can download a binary for every available version as described in Bleeding E
 * Register the Runner
 注册Runner
 
+* Add gitlab-runner user to docker group:
+ 添加gitlab-runner至docker组里面
+
+```
+sudo usermod -aG docker gitlab-runner
+```
+
+* Verify that gitlab-runner has access to Docker:
+ 验证gitlab-runner是否有docker权限
+
+```
+sudo -u gitlab-runner -H docker info
+```
 
