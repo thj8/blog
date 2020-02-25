@@ -2,6 +2,7 @@
 ### 新建一个tag
 
 ```
+git tag v1.0				    # 打1.0简单标签
 git tag -a v0.1 -m 'first version v0.1'     # -a tag名称 -m message
 git tag -a v2.2 9fceb02                     # 在9fceb02处打上tag
 ```
@@ -13,6 +14,13 @@ git push origin v1.5                        # 推送一个tag
 git push origin --tags                      # 推送所有tag
 ```
 
+### 拉取tag
+
+```
+git pull			 	# 分支和tag都拉取
+git fetch origin tag v4.0		# 只取v4.0tag
+```
+
 ### 删除本地tag
 
 ```
@@ -20,6 +28,8 @@ git tag -d v0.1
 ```
 
 ### 删除远程tag
+
+远程tag删除后, 本地用户无法直接感知, pull无法感知.
 
 ```
 git push origin -d tag v0.1
