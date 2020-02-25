@@ -30,7 +30,9 @@ git branch -D thj_test     # 强制删除分支
 ### 删除远程分支
 
 ```
+git push origin :thj_test
 git push origin -d thj_test
+git push origin --delete thj_test
 ```
 
 ### 查看远程和本地分支对应关系
