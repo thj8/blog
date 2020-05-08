@@ -45,7 +45,7 @@ yum -y install automake
 yum -y install byacc flex
 
 cd /tmp
-git clone https://github.com/tmux/tmux.git
+git clone https://github.com.cnpmjs.org/tmux/tmux.git
 
 cd tmux
 sh autogen.sh
@@ -54,7 +54,7 @@ make
 make install
 
 cd
-git clone https://github.com/gpakosz/.tmux.git
+git clone https://github.com.cnpmjs.org/gpakosz/.tmux.git
 ln -s -f .tmux/.tmux.conf
 cp .tmux/.tmux.conf.local .
 
