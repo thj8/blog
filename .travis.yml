@@ -9,8 +9,9 @@ branches:
   only:
   - master
 before_install:
-- openssl aes-256-cbc -K $encrypted_40b5254b0ebf_key -iv $encrypted_40b5254b0ebf_iv -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- openssl aes-256-cbc -K $encrypted_da3f986a3a02_key -iv $encrypted_da3f986a3a02_iv
+  -in tinyfat-jap.pem.enc -out ~\/ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
-- echo -e "Host 45.62.114.69\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- echo -e "Host 47.74.46.113\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 after_success:
-- ssh root@45.62.114.69 -p 27213 'cd /home/blog && ./update.sh'
+- ssh root@47.74.46.113 'cd /home/blog && ./update.sh'
