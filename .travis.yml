@@ -10,7 +10,7 @@ branches:
   - master
 before_install:
 - openssl aes-256-cbc -K $encrypted_da3f986a3a02_key -iv $encrypted_da3f986a3a02_iv
-  -in tinyfat-jap.pem.enc -out ~\/ssh/id_rsa -d
+  -in tinyfat-jap.pem.enc -out ~\/ssh\/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host 47.74.46.113\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 after_success:
