@@ -103,23 +103,6 @@ git rm name1
 git mv name1 name2
 ```
 
-## log
-### 查看log
-以下很多参数是可以叠加使用，达到最大的效果
-
-```
-git log                     # 显示所有log
-git log -5                  # 显示最新的5条记录
-git log -p -1               # -p 显示详细的差异
-git log -2 --stat           # 仅仅显示修改过的文件
-git log -2 --shortstat      # 仅仅多少个文件修改
-git log -2 --name-only      # 仅显示每一次提交的文件名
-git log --pretty=oneline    # 每个提交一行，hash + message
-git log --since=2.weeks     # 2个星期以内的变化
-git log --author=shixiaobo  # 指定作者的提交
-git log -Sxxxxxxxxxxxxxxxx  # -S，可以列出那些添加或移除了某些字符串的提交
-git log --no-merges         # 去除merge的日志
-```
 
 ## 远程仓库
 
@@ -164,7 +147,7 @@ git push
 git merge --abort  #取消merge
 ```
 
-### 同时改变了文件名和内容 
+### 同时改变了文件名和内容
 git会智能的感知文件名的变化，不需要特殊的处理
 
 ### 把同一文件修改为不同的文件名
@@ -203,7 +186,7 @@ git push -f
 ### 别名
 
 ```
-git config --global alias.co checkout 
+git config --global alias.co checkout
 git config --global alias.br branch
 git config --global alias.ci commit
 git config --global alias.st status
