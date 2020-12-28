@@ -17,3 +17,34 @@ git log --author=shixiaobo  # 指定作者的提交
 git log -Sxxxxxxxxxxxxxxxx  # -S，可以列出那些添加或移除了某些字符串的提交
 git log --no-merges         # 去除merge的日志
 ```
+
+## 查看差异
+
+## 1.查看dev有,而master中没有的
+```
+git log dev ^master
+```
+
+## 2.查看dev中比master中多提交了哪些内容
+```
+git log maser..dev
+```
+
+## 3.不知道谁提交的多谁少,单纯指向知道有什么不一样
+```
+git log dev...master
+```
+
+## 5.上述条件,再显示出每个提交是哪个分支
+```
+git log --left-right dev...master
+```
+
+
+## 查看一个文件在哪个版本被删除了
+
+比如查询vue.config.js这个文件在什么时候被删除了
+
+```
+git log --diff-filter=D --summary | grep -C 10 vue.config.js
+```
