@@ -27,7 +27,7 @@ git log dev ^master
 
 ## 2.查看dev中比master中多提交了哪些内容
 ```
-git log maser..dev
+git log master..dev
 ```
 
 ## 3.不知道谁提交的多谁少,单纯指向知道有什么不一样
