@@ -2,8 +2,7 @@
 
 ```
 sudo yum -y install vim curl wget net-tools lsof nmap-ncat.x86_64
-sudo yum -y install git
-sudo yum -y install gcc
+sudo yum -y install git gcc tmux
 ```
 
 ## oh my zsh
