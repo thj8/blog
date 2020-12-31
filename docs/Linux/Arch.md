@@ -1,4 +1,6 @@
-# 检查网络
+# Archlinux
+
+## 检查网络
 ```
 root@archiso ~ # ip ad                                                                           
 1: lo:  mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -16,7 +18,7 @@ root@archiso ~ # ip ad
        valid_lft forever preferred_lft forever
 ```
 
-# 创建分区
+## 创建分区
 
 ```
 // 查看硬盘
@@ -27,56 +29,56 @@ ddisk /dev/sda
 n p 一路回车  w保存
 ```
 
-# 格式化分区 并挂载分区
+## 格式化分区 并挂载分区
 ```
 mkfs.ext4 /dev/sda1
 mount /dev/sda1 /mnt
 ```
 
-# 修改镜像源
+## 修改镜像源
 /etc/pacman.d/mirrorlist 改为国内镜像
 
-# 安装必须的安装包
+## 安装必须的安装包
 ```
 pacstrap /mnt base linux linux-firmware dhcpcd vim openssh xfsprogs man net-tools
 ```
 
-# 生成fstab文件
+## 生成fstab文件
 ```
 genfstab -U /mnt >> /mnt/etc/fstab  
 
 cat /mbt/etc/fstab
 ```
 
-# 更改根目录
+## 更改根目录
 ```
 arch-chroot /mnt
 ```
 
-# 更改时区
+## 更改时区
 ```
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock -w
 ```
 
-# 设置本地化文本编码
+## 设置本地化文本编码
 ```
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 ```
 
-# 修改root密码
+## 修改root密码
 ```
 passwd root
 ```
 
-# 设置开机启动项
+## 设置开机启动项
 ```
 systemctl enable dhcpcd
 systemctl enable sshd
 ```
 
-# 安装并配置grub引导
+## 安装并配置grub引导
 ```
 pacman -S grub
 
@@ -85,13 +87,13 @@ grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-# 配置完成
+## 配置完成
 ```
 [root@Archone /]# exit
 root@archiso ~ # reboot
 ``` 
 
-# 修改ssh配置, 允许root用户
+## 修改ssh配置, 允许root用户
 ```
 [root@arch-one ~]# sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 [root@arch-one ~]# systemctl restart sshd
