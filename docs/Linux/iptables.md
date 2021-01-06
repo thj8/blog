@@ -1,4 +1,4 @@
-# iptables
+# Iptables
 
 ## 内网如何做对外服务器
 
@@ -65,21 +65,25 @@ iptables-t nat -A POSTROUTING -s 10.8.0.0/255.255.255.0 -o eth0 -j SNAT --to-sou
 
 ## filter
 filer表的控制是我们实现本机防火墙的重要手段, 特别是对input链的控制
+
 - INPUT   负责过滤所有目标地址是本机的数据包,就是过滤进入主机的数据包
 - FORWARD 负责转发流经主机的数据包, 起转发的作用, net.ipv4.ip_forward=1
 - OUTPUT  负责所有源地址是本机地址的数据包, 就是处理从主机发出去的数据包
 
 ## nat
 就是网络地址转换, 负责ip地址和port的转换, 一般用于局域网共享上网, 特殊端口和ip转换服务相关
-1) 企业路由 网关 共享上网(POSTROUTING)
-2) 做内部外部ip地址映射, 通过iptables防火墙映射ip到内部服务器,(PREROUTING)
-3) 单个端口的映射,(PREROUTING)
 
--OUTPUT       和主机发出去的数据包有关, 改变主机发出数据包的地址
--PREROUTING   **在数据包到达防火墙时进行路由判断之间执行的规则**, 作用是改变数据包的目的地址和目的端口(通俗的讲就是收信时, 根据规则重写收件人的地址, 这看上去不地道,例如把公网的数据包转到内网的某个ip的80端口
--POSTOUTING   **在数据包离开防火墙时进行路由判断之后执行的规则**,作用是改写数据包的源地址和源端口,例如路由器把源地址改为公网地址发送出去
+- 企业路由 网关 共享上网(POSTROUTING)
+- 做内部外部ip地址映射, 通过iptables防火墙映射ip到内部服务器,(PREROUTING)
+- 单个端口的映射,(PREROUTING)
+
+- OUTPUT       和主机发出去的数据包有关, 改变主机发出数据包的地址
+- PREROUTING   **在数据包到达防火墙时进行路由判断之间执行的规则**, 作用是改变数据包的目的地址和目的端口(通俗的讲就是收信时, 根据规则重写收件人的地址, 这看上去不地道,例如把公网的数据包转到内网的某个ip的80端口
+- POSTOUTING   **在数据包离开防火墙时进行路由判断之后执行的规则**,作用是改写数据包的源地址和源端口,例如路由器把源地址改为公网地址发送出去
 
 ## 实例
+
+```
 -n 数字
 -L 列表
 -F 清除所有规则
@@ -97,6 +101,7 @@ filer表的控制是我们实现本机防火墙的重要手段, 特别是对inpu
 --line-number  显示序号
 -i 指定网卡
 -s 指定ip范围, 子网
+```
 
 
 禁止ssh连接
@@ -156,6 +161,7 @@ iptables-save > /etc/sysconfig/iptables
 
 ## iptables有四种状态
 NEW，ESTABLISHED，RELATED，INVALID。
+
 - NEW状态：主机连接目标主机，在目标主机上看到的第一个想要连接的包
 - ESTABLISHED状态：主机已与目标主机进行通信，判断标准只要目标主机回应了第一个包，就进入该状态。
 - RELATED状态：主机已与目标主机进行通信，目标主机发起新的链接方式，例如ftp
@@ -164,6 +170,7 @@ NEW，ESTABLISHED，RELATED，INVALID。
 ## iptables -m, -p 参数说明
  
 
+```
 -m： module_name
 
 -p：protocol
@@ -172,6 +179,7 @@ NEW，ESTABLISHED，RELATED，INVALID。
 iptables -p tcp : 表示使用 TCP协议
 iptables -m tcp：表示使用TCP模块的扩展功能（tcp扩展模块提供了 --dport, --tcp-flags, --sync等功能）
 
+```
 eg:
 ```
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 20022 -j ACCEPT
