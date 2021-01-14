@@ -1,4 +1,4 @@
-# replication
+# Replication
 
 ## 准备工作(主库)
 ```

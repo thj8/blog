@@ -1,5 +1,5 @@
 
-# haproxy
+# Haproxy
 
 ## 准备工作, 配置文件
 ```
